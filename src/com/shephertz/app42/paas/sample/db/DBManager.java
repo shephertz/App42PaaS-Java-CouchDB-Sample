@@ -1,5 +1,6 @@
 package com.shephertz.app42.paas.sample.db;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +36,12 @@ public class DBManager {
 		List<Document> result = couchViewResults.getResults();
 		List<String> resultRows = new ArrayList<String>();
 		for(Document doc : result){
-			resultRows.add(db.getDocument(doc.getString("id")).toString());
+			try {
+				resultRows.add(db.getDocument(doc.getString("id")).toString());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return resultRows;
 	}
@@ -46,7 +52,12 @@ public class DBManager {
 		doc.put("email", email);
 		doc.put("description", description);
 		
-		db.saveDocument(doc);
+		try {
+			db.saveDocument(doc);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
